@@ -1,34 +1,27 @@
 package com.socket.chat.controller;
 
-import com.socket.chat.chatUtil.ChatRoom;
-import com.socket.chat.service.ChatService;
+import com.socket.chat.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
+import org.apache.logging.log4j.message.SimpleMessage;
+import org.apache.logging.log4j.message.SimpleMessageFactory;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.messaging.converter.SimpleMessageConverter;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
+import org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler;
+import org.springframework.stereotype.Controller;
 
 @RequiredArgsConstructor
-@RestController
-@RequestMapping("/chat")
+@Controller
 public class ChatController {
-    @Autowired
-    private final ChatService chatService;
 
-    /*
-     *  채팅방 생성
-     * @param String name 채팅방 이름
-     * @return 패팅방 UUID
-     * */
-    @PostMapping
-    public ChatRoom createRoom(@RequestBody Map<String, String> map) {
-        String name = map.get("name");
-        return chatService.createRoom(name);
-    }
+    private final SimpMessageSendingOperations messagingTemplate;
 
-    @GetMapping
-    public List<ChatRoom> findAllRoom() {
-        return chatService.findAllRoom();
+    @MessageMapping("/chat/message")
+    public void message(ChatMessage message) {
+        if (ChatMessage.MessageType.JOIN.equals(message.getType())) {
+            message.setMessage(message.getSender() + "님이 입장하셨습니다.");
+        }
+        messagingTemplate.convertAndSend("/sub/chat/room/" + message.getRoomId(), message);
     }
 }

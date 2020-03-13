@@ -1,3 +1,8 @@
+/*
+* ChatRoomRepository가 ChatServic의 역할을 포함하기때문에 주석 처리
+* */
+
+/*
 package com.socket.chat.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,24 +29,30 @@ public class ChatService {
         chatRooms = new LinkedHashMap<>();
     }
 
-    /*
+    */
+/*
     * 모든 채팅방 조회
-    * */
+    * *//*
+
     public List<ChatRoom> findAllRoom() {
         return new ArrayList<>(chatRooms.values());
     }
 
-    /*
+    */
+/*
     * roomId로 채팅방 조회
-    * */
+    * *//*
+
     public ChatRoom findRoomById(String roomId) {
         return chatRooms.get(roomId);
     }
 
-    /*
+    */
+/*
     * 채팅방 생성
     * UUID로 패팅방 식별
-    * */
+    * *//*
+
     public ChatRoom createRoom(String name) {
         String randomId = UUID.randomUUID().toString();
         ChatRoom chatRoom = ChatRoom.builder()
@@ -52,10 +63,12 @@ public class ChatService {
         return chatRoom;
     }
 
-    /*
+    */
+/*
     * 메시지 발송
     * WebSocketSession에 메시지 발송
-    * */
+    * *//*
+
     public <T> void sendMessage(WebSocketSession session, T message) {
         try {
             session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
@@ -64,3 +77,4 @@ public class ChatService {
         }
     }
 }
+*/
