@@ -54,7 +54,7 @@
             },
             createRoom: function() {
                 if("" === this.room_name) {
-                    alert("방 제목을 입력해 주십시요.");
+                    alert("input chat room name.");
                     return;
                 } else {
                     var params = new URLSearchParams();

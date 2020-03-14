@@ -21,11 +21,11 @@
     </div>
     <div class="input-group">
         <div class="input-group-prepend">
-            <label class="input-group-text">내용</label>
+            <label class="input-group-text">content</label>
         </div>
         <input type="text" class="form-control" v-model="message" v-on:keypress.enter="sendMessage">
         <div class="input-group-append">
-            <button class="btn btn-primary" type="button" @click="sendMessage">보내기</button>
+            <button class="btn btn-primary" type="button" @click="sendMessage">Send</button>
         </div>
     </div>
     <ul class="list-group">
@@ -70,7 +70,7 @@
                 this.message = '';
             },
             recvMessage: function(recv) {
-                this.messages.unshift({"type":recv.type,"sender":recv.type=='ENTER'?'[알림]':recv.sender,"message":recv.message})
+                this.messages.unshift({"type":recv.type,"sender":recv.type=='ENTER'?'[NOTICE]':recv.sender,"message":recv.message})
             }
         }
     });
