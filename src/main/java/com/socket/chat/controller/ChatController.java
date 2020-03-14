@@ -2,21 +2,20 @@ package com.socket.chat.controller;
 
 import com.socket.chat.dto.ChatMessage;
 import lombok.RequiredArgsConstructor;
-import org.apache.logging.log4j.message.SimpleMessage;
-import org.apache.logging.log4j.message.SimpleMessageFactory;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.messaging.converter.SimpleMessageConverter;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
-import org.springframework.messaging.simp.broker.SimpleBrokerMessageHandler;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@Controller
+@RestController
 public class ChatController {
 
     private final SimpMessageSendingOperations messagingTemplate;
 
+    /*
+    * 메시지 전송
+    * 설정한 prefix와 Mapping 됨 (/pub/chat/message)
+    * */
     @MessageMapping("/chat/message")
     public void message(ChatMessage message) {
         if (ChatMessage.MessageType.JOIN.equals(message.getType())) {
